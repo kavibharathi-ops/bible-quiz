@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>1 Timothy Bible Quiz</title>
+
+<style>
+body { font-family: Arial; padding: 20px; }
+
+.nav button {
+    padding: 8px 12px;
+    margin: 3px;
+    cursor: pointer;
+}
+
+.active {
+    background-color: orange;
+    color: white;
+}
+
+.question { margin-bottom: 20px; }
+
+.option {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    cursor: pointer;
+}
+
+.circle {
+    width: 18px;
+    height: 18px;
+    border: 2px solid gray;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.correct { background-color: green; border-color: green; }
+.wrong { background-color: red; border-color: red; }
+
+#result { margin-top: 20px; font-size: 20px; font-weight: bold; }
+</style>
+</head>
+
+<body>
+
+<h3>📖 1 தீமோத்தேயு - Bible Quiz</h3>
+
+<div class="nav">
+    <button onclick="loadChapter(1)" id="c1">1</button>
+    <button onclick="loadChapter(2)">2</button>
+    <button onclick="loadChapter(3)">3</button>
+    <button onclick="loadChapter(4)">4</button>
+    <button onclick="loadChapter(5)">5</button>
+    <button onclick="loadChapter(6)">6</button>
+</div>
+
+<hr>
+
+<input type="text" id="username" placeholder="Enter your name"><br><br>
+
+<div id="quiz"></div>
+
+<button onclick="submitQuiz()">Submit</button>
+
+<div id="result"></div>
+
+<script>
+let score = 0;
+let total = 0;
+
+function loadChapter(ch) {
+
+    score = 0;
+    document.getElementById("result").innerText = "";
+
+    document.querySelectorAll(".nav button").forEach(b => b.classList.remove("active"));
+    if(document.getElementById("c"+ch)) {
+        document.getElementById("c"+ch).classList.add("active");
+    }
+
+    let quizDiv = document.getElementById("quiz");
+
+    if (ch !== 1) {
+        quizDiv.innerHTML = "<h3>Chapter " + ch + " - Coming Soon 🚧</h3>";
+        total = 0;
+        return;
+    }
+
+    quizDiv.innerHTML = `
+
+${generateQuestion(1,"நம்முடைய இரட்சகராயிருக்கிற ______",
+["கர்த்தர்","தேவன்","ராஜன்"],1)}
+
+${generateQuestion(2,"உத்தம குமாரனாகிய ______",
+["பவுல்","பேதுரு","தீமோத்தேயு"],2)}
+
+${generateQuestion(3,"கிருபையும் ______ ம் சமாதானமும்",
+["அன்பும்","இரக்கமும்","விசுவாசமும்"],1)}
+
+${generateQuestion(4,"வேற்றுமையான ______ களைப் போதியாதபடிக்கும்",
+["உபதேசங்களை","வார்த்தைகளை","வசனங்களை"],0)}
+
+${generateQuestion(5,"முடிவில்லாத ______ களையும்",
+["கதைகளையும்","வம்சவரலாறுகளையும்","போதனைகளையும்"],1)}
+
+${generateQuestion(6,"மாயமற்ற ______ விசுவாசத்திலும்",
+["மனம்","விசுவாசம்","அன்பு"],1)}
+
+${generateQuestion(7,"வீண் ______ பேச்சுக்கு",
+["பேச்சு","வாதம்","சண்டை"],0)}
+
+${generateQuestion(8,"நியாயப்பிரமாணம் ______ க்கு விதிக்கப்படாமல்",
+["பாவிக்கு","நீதிமானுக்கு","ஜனங்களுக்கு"],1)}
+
+${generateQuestion(9,"மகிமையான ______",
+["வசனம்","சுவிசேஷம்","கட்டளை"],1)}
+
+${generateQuestion(10,"என்னைப் பலப்படுத்துகிற ______",
+["இயேசுகிறிஸ்து","தேவன்","ஆவி"],0)}
+
+${generateQuestion(11,"கொடுமை ______ செய்கிறவன்",
+["பார்ப்பவன்","செய்கிறவன்","பேசுகிறவன்"],1)}
+
+${generateQuestion(12,"விசுவாசத்தோடும் ______ உடனும்",
+["இரக்கமும்","அன்போடும்","சாந்தமும்"],1)}
+
+${generateQuestion(13,"கிறிஸ்து இயேசு ______ வந்தார்",
+["பரலோகத்தில்","உலகத்தில்","சபையில்"],1)}
+
+${generateQuestion(14,"பிரதான ______ நான்",
+["பாவி","சீடன்","மனுஷன்"],0)}
+
+${generateQuestion(15,"அதரிசனமுமுள்ள ______",
+["தேவன்","ராஜன்","கர்த்தர்"],1)}
+
+${generateQuestion(16,"நல்ல ______ போராட்டம்",
+["ஜெபம்","போராட்டம்","சேவை"],1)}
+
+${generateQuestion(17,"கப்பலைச் ______",
+["காப்பாற்றினார்கள்","சேதப்படுத்தினார்கள்","விட்டார்கள்"],1)}
+
+${generateQuestion(18,"அவர்களை ______ ஒப்புக்கொடுத்தேன்",
+["சாத்தானிடத்தில்","தேவனிடத்தில்","ஜனங்களிடம்"],0)}
+
+    `;
+
+    total = document.querySelectorAll(".question").length;
+}
+
+function generateQuestion(num, question, options, correctIndex) {
+    let html = `<div class="question" data-answered="false">
+    <p>${num}. ${question}</p>`;
+    options.forEach((opt, i) => {
+        html += `<div class="option" onclick="check(this, ${i===correctIndex})">
+        <div class="circle"></div> ${opt}</div>`;
+    });
+    html += `</div>`;
+    return html;
+}
+
+function check(option, correct) {
+    let question = option.parentElement;
+    if (question.getAttribute("data-answered") === "true") return;
+
+    question.setAttribute("data-answered", "true");
+
+    let circle = option.querySelector(".circle");
+
+    if (correct) {
+        circle.classList.add("correct");
+        score++;
+    } else {
+        circle.classList.add("wrong");
+    }
+}
+
+function submitQuiz() {
+
+    let name = document.getElementById("username").value;
+
+    if (name === "") {
+        alert("Enter your name");
+        return;
+    }
+
+    if (total === 0) {
+        alert("No quiz in this chapter yet");
+        return;
+    }
+
+    document.getElementById("result").innerText =
+        name + " - Score: " + score + " / " + total;
+
+ // 🔥 GOOGLE SHEET SEND
+    fetch("https://script.google.com/macros/s/AKfycbzskfiJ81iCxGmFEj4Gju7OQt2K4aWWa0FHNoNXn1c-7QeDrwUC0ny5ixcvHQP3L4eY/exec", {
+        method: "POST",
+        body: JSON.stringify({
+            name: name,
+            score: score,
+            total: total
+        })
+    })
+    .then(res => console.log("Saved"))
+    .catch(err => console.log("Error", err));
+
+
+
+
+
+}
+
+loadChapter(1);
+</script>
+
+</body>
+</html>
