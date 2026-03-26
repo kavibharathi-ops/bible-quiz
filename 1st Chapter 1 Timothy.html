@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>1 Timothy Bible Quiz</title>
+
+<style>
+body { font-family: Arial; padding: 20px;
+	    background-color: #f2f2f2;
+
+}
+
+.nav button {
+    padding: 8px 12px;
+    margin: 3px;
+    cursor: pointer;
+}
+
+.active {
+    background-color: orange;
+    color: white;
+}
+
+.question { margin-bottom: 20px; }
+
+.option {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    cursor: pointer;
+}
+
+
+
+
+.circle {
+    width: 18px;
+    height: 18px;
+    border: 2px solid gray;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.correct { background-color: green; border-color: green; }
+.wrong { background-color: red; border-color: red; }
+
+#result { margin-top: 20px; font-size: 20px; font-weight: bold; }
+</style>
+</head>
+
+<body>
+<h3 style="text-align:center; font-size:28px;">The Upper Room Fellowship</h3>
+<h3>📖 1 தீமோத்தேயு - Bible Quiz</h3>
+
+<div class="nav">
+    <button onclick="loadChapter(1)" id="c1">1</button>
+    <button onclick="loadChapter(2)" id="c2">2</button>
+    <button onclick="loadChapter(3)" id="c3">3</button>
+    <button onclick="loadChapter(4)" id="c4">4</button>
+    <button onclick="loadChapter(5)" id="c5">5</button>
+    <button onclick="loadChapter(6)" id="c6">6</button>
+</div>
+
+<hr>
+
+<input type="text" id="username" placeholder="Enter your name"><br><br>
+
+<div id="quiz"></div>
+
+<button onclick="submitQuiz()">Submit</button>
+
+<div id="result"></div>
+
+<script>
+
+// 🔥 PAGE OPEN TRACKING (NEW)
+window.onload = function() {
+    fetch("https://script.google.com/macros/s/AKfycbzskfiJ81iCxGmFEj4Gju7OQt2K4aWWa0FHNoNXn1c-7QeDrwUC0ny5ixcvHQP3L4eY/exec", {
+        method: "POST",
+        body: JSON.stringify({
+            name: "Visitor",
+            score: "Opened Page",
+            total: "-"
+        })
+    })
+    .then(res => console.log("Visitor tracked"))
+    .catch(err => console.log("Error", err));
+};
+
+let score = 0;
+let total = 0;
+
+function loadChapter(ch) {
+
+    score = 0;
+    document.getElementById("result").innerText = "";
+
+    document.querySelectorAll(".nav button").forEach(b => b.classList.remove("active"));
+    if(document.getElementById("c"+ch)) {
+        document.getElementById("c"+ch).classList.add("active");
+    }
+
+    let quizDiv = document.getElementById("quiz");
+
+    if (ch === 1) {
+
+
+    quizDiv.innerHTML = `
+
+${generateQuestion(1,"நம்முடைய இரட்சகராயிருக்கிற ______",
+["கர்த்தர்","தேவன்","ராஜன்"],1)}
+
+${generateQuestion(2,"உத்தம குமாரனாகிய ______",
+["பவுல்","பேதுரு","தீமோத்தேயு"],2)}
+
+${generateQuestion(3,"கிருபையும் ______ ம் சமாதானமும்",
+["அன்பும்","இரக்கமும்","விசுவாசமும்"],1)}
+
+${generateQuestion(4,"வேற்றுமையான ______ களைப் போதியாதபடிக்கும்",
+["உபதேசங்களை","வார்த்தைகளை","வசனங்களை"],0)}
+
+${generateQuestion(5,"முடிவில்லாத ______ களையும்",
+["கதைகளையும்","வம்சவரலாறுகளையும்","போதனைகளையும்"],1)}
+
+${generateQuestion(6,"மாயமற்ற ______ விசுவாசத்திலும்",
+["மனம்","விசுவாசம்","அன்பு"],1)}
+
+${generateQuestion(7,"வீண் ______ பேச்சுக்கு",
+["பேச்சு","வாதம்","சண்டை"],0)}
+
+${generateQuestion(8,"நியாயப்பிரமாணம் ______ க்கு விதிக்கப்படாமல்",
+["பாவிக்கு","நீதிமானுக்கு","ஜனங்களுக்கு"],1)}
+
+${generateQuestion(9,"மகிமையான ______",
+["வசனம்","சுவிசேஷம்","கட்டளை"],1)}
+
+${generateQuestion(10,"என்னைப் பலப்படுத்துகிற ______",
+["இயேசுகிறிஸ்து","தேவன்","ஆவி"],0)}
+
+${generateQuestion(11,"கொடுமை ______ செய்கிறவன்",
+["பார்ப்பவன்","செய்கிறவன்","பேசுகிறவன்"],1)}
+
+${generateQuestion(12,"விசுவாசத்தோடும் ______ உடனும்",
+["இரக்கமும்","அன்போடும்","சாந்தமும்"],1)}
+
+${generateQuestion(13,"கிறிஸ்து இயேசு ______ வந்தார்",
+["பரலோகத்தில்","உலகத்தில்","சபையில்"],1)}
+
+${generateQuestion(14,"பிரதான ______ நான்",
+["பாவி","சீடன்","மனுஷன்"],0)}
+
+${generateQuestion(15,"அதரிசனமுமுள்ள ______",
+["தேவன்","ராஜன்","கர்த்தர்"],1)}
+
+${generateQuestion(16,"நல்ல ______ போராட்டம்",
+["ஜெபம்","போராட்டம்","சேவை"],1)}
+
+${generateQuestion(17,"கப்பலைச் ______",
+["காப்பாற்றினார்கள்","சேதப்படுத்தினார்கள்","விட்டார்கள்"],1)}
+
+${generateQuestion(18,"அவர்களை ______ ஒப்புக்கொடுத்தேன்",
+["சாத்தானிடத்தில்","தேவனிடத்தில்","ஜனங்களிடம்"],0)}
+
+    `;
+
+} 
+
+else if (ch === 2) {
+
+    quizDiv.innerHTML = `
+
+${generateQuestion(1,"எல்லா மனுஷருக்காக செய்ய வேண்டியவற்றில் சேராதது எது?",
+["ஜெபங்கள்","ஸ்தோத்திரங்கள்","சண்டைகள்"],2)}
+
+${generateQuestion(2,"ராஜாக்களுக்காக ஜெபிப்பதின் நோக்கம் என்ன?",
+["அமைதியான வாழ்க்கை","அதிகாரம் பெற","புகழ் பெற"],0)}
+
+${generateQuestion(3,"தேவனுக்கு நன்மையும் பிரியமுமானது எது?",
+["எல்லாரும் இரட்சிக்கப்படுவது","பணம் கொடுப்பது","பாடுவது மட்டும்"],0)}
+
+${generateQuestion(4,"தேவன் எல்லாருக்கும் விரும்புவது எது?",
+["புகழ்","இரட்சிப்பும் சத்திய அறிவும்","ஆட்சி"],1)}
+
+${generateQuestion(5,"மத்தியஸ்தர் பற்றி சரியானது எது?",
+["பலர் உள்ளனர்","ஒருவர் மட்டும்","யாருமில்லை"],1)}
+
+${generateQuestion(6,"கிறிஸ்து தம்மை ஏன் ஒப்புக்கொடுத்தார்?",
+["அதிகாரம் பெற","எல்லாரையும் மீட்க","போதிக்க மட்டும்"],1)}
+
+${generateQuestion(7,"பவுல் எந்த சேவைக்காக நியமிக்கப்பட்டார்?",
+["பிரசங்கியும் அப்போஸ்தலனும்","ராஜாவாக","பணக்காரராக"],0)}
+
+${generateQuestion(8,"ஜெபிக்கும் போது புருஷர்கள் எப்படி இருக்க வேண்டும்?",
+["கோபத்துடன்","தர்க்கமின்றி பரிசுத்தமாக","சத்தமாய்"],1)}
+
+${generateQuestion(9,"ஸ்திரீகள் அலங்காரம் செய்யக் கூடாதது எது?",
+["பொன்னும் முத்தும்","நற்கிரியைகள்","அடக்கம்"],0)}
+
+${generateQuestion(10,"உண்மையான அலங்காரம் எது?",
+["விலை உயர்ந்த உடை","நற்கிரியைகள்","அழகு"],1)}
+
+${generateQuestion(11,"ஸ்திரீ எப்படிக் கற்றுக்கொள்ள வேண்டும்?",
+["அமைதலோடு","சத்தமாய்","வாதத்தோடு"],0)}
+
+${generateQuestion(12,"யாருக்கு உபதேசிக்க அனுமதி இல்லை என்று கூறப்படுகிறது?",
+["ஸ்திரீ","புருஷன்","எல்லாரும்"],0)}
+
+${generateQuestion(13,"முதலில் உருவாக்கப்பட்டவர் யார்?",
+["ஆதாம்","ஏவாள்","மோசே"],0)}
+
+${generateQuestion(14,"வஞ்சிக்கப்பட்டவர் யார்?",
+["ஆதாம்","ஸ்திரீ","யாருமில்லை"],1)}
+
+${generateQuestion(15,"எதில் நிலைத்திருந்தால் இரட்சிப்பு கிடைக்கும்?",
+["செல்வம்","விசுவாசம் அன்பு பரிசுத்தம்","புகழ்"],1)}
+
+${generateQuestion(16,"ஜெபம் செய்யும் போது கைகளை எப்படி உயர்த்த வேண்டும்?",
+["கோபத்துடன்","பரிசுத்தமாக","வலியாய்"],1)}
+
+${generateQuestion(17,"ஸ்திரீகளுக்கு ஏற்ற குணம் எது?",
+["அடக்கம் மற்றும் நாணம்","அழகு மட்டும்","புகழ்"],0)}
+
+${generateQuestion(18,"தேவன் ஒருவரே என்பதை இது எதை காட்டுகிறது?",
+["ஒன்றே தேவன்","பல தேவன்","யாருமில்லை"],0)}
+
+${generateQuestion(19,"கிறிஸ்து இயேசு யாருக்காக தம்மை ஒப்புக்கொடுத்தார்?",
+["சிலருக்கே","எல்லாருக்கும்","பாவமில்லாதவர்களுக்கு"],1)}
+
+${generateQuestion(20,"பிள்ளைப்பேற்றினாலே இரட்சிப்பு கிடைக்க என்ன அவசியம்?",
+["செல்வம்","விசுவாசம் அன்பு பரிசுத்தம்","அழகு"],1)}
+
+  `;
+}
+
+else {
+
+        quizDiv.innerHTML = "<h3>Chapter " + ch + " - Coming Soon 🚧</h3>";
+        total = 0;
+    }
+
+    total = document.querySelectorAll(".question").length;
+}
+
+function generateQuestion(num, question, options, correctIndex) {
+    let html = `<div class="question" data-answered="false">
+    <p>${num}. ${question}</p>`;
+    options.forEach((opt, i) => {
+        html += `<div class="option" onclick="check(this, ${i===correctIndex})">
+        <div class="circle"></div> ${opt}</div>`;
+    });
+    html += `</div>`;
+    return html;
+}
+
+function check(option, correct) {
+    let question = option.parentElement;
+    if (question.getAttribute("data-answered") === "true") return;
+
+    question.setAttribute("data-answered", "true");
+
+    let circle = option.querySelector(".circle");
+
+    if (correct) {
+        circle.classList.add("correct");
+        score++;
+    } else {
+        circle.classList.add("wrong");
+    }
+}
+
+function submitQuiz() {
+
+    let name = document.getElementById("username").value;
+
+    if (name === "") {
+        alert("Enter your name");
+        return;
+    }
+
+    if (total === 0) {
+        alert("No quiz in this chapter yet");
+        return;
+    }
+
+    document.getElementById("result").innerText =
+        name + " - Score: " + score + " / " + total;
+
+    // 🔥 GOOGLE SHEET SEND
+    fetch("https://script.google.com/macros/s/AKfycbzskfiJ81iCxGmFEj4Gju7OQt2K4aWWa0FHNoNXn1c-7QeDrwUC0ny5ixcvHQP3L4eY/exec", {
+        method: "POST",
+        body: JSON.stringify({
+            name: name,
+            score: score,
+            total: total
+        })
+    })
+    .then(res => console.log("Saved"))
+    .catch(err => console.log("Error", err));
+}
+
+loadChapter(1);
+</script>
+
+</body>
+</html>
